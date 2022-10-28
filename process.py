@@ -21,7 +21,7 @@ class item:
         pr = f'{self.price:.2f}'
         pp = f'{round(self.price_per,2):.2f}'
         ss = ''.join(sorted(self.ss))
-        return f'{ss:<3s}  ${str(pr):{fmt}}, ${str(pp):{fmt}}:  {self.name}'
+        return f'({self.split}) {ss:<3s}  ${str(pr):{fmt}}, ${str(pp):{fmt}}:  {self.name}'
     
     def __repr__(self) -> str:
         return self.__str__(self)
@@ -98,19 +98,23 @@ def write_all_to_file(filename,ps,all_items):
 
 def pretty_print_person(p,fn,total_bill=False):
     with open(f'./{fn}-{p.abv}.txt','w') as f:
-        f.write(f'${p.get_total(total_bill=total_bill)}: {p.name}\n\n')
-        f.write(f'SPL    TOTAL    SPLIT   NAME\n')
-        f.write(f'----------------------------\n')
+
+        _, fn = fn.split('/')
+        date, name = fn.split('-')
+        date = f'{date[4:6]}/{date[6:8]}/{date[0:4]}'
+        f.write(f'{date}, {name.title()}: {p.name}\n\n')
+        f.write(f'  SPLIT    TOTAL      PER   NAME\n')
+        f.write(f'--------------------------------\n')
         for i in p.items:
             f.write(f'{str(i)}\n')
-
+        f.write(f'\n           TOTAL: ${str(p.get_total(total_bill=total_bill)):>6s}')
 
 def process(filename):
 
     with open('./people.yaml', 'r') as f:
         people = safe_load(f)
     
-    all_items = person(f'{filename}', 'all')
+    all_items = person(f'ALL', 'all')
     ps = [person(p.get('name'), p.get('abv')) for p in people]
 
     with open(f'./files/{filename}.csv','r') as f:
