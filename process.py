@@ -88,14 +88,14 @@ def print_people_and_items(ps):
 
 
 def write_all_to_file(filename,ps,all_items):
-    pretty_print_person(all_items,f'files/{filename}')
+    pretty_print_person(all_items,f'files/{filename}',total_bill=True)
     for p in ps:
         pretty_print_person(p,f'out/{filename}')
     
 
-def pretty_print_person(p,fn):
+def pretty_print_person(p,fn,total_bill=False):
     with open(f'./{fn}-{p.abv}.txt','w') as f:
-        f.write(f'${p.get_total()}: {p.name}\n\n')
+        f.write(f'${p.get_total(total_bill=total_bill)}: {p.name}\n\n')
         f.write(f'SPL   TOTAL    SPLIT   NAME\n')
         for i in p.items:
             f.write(f'{str(i)}\n')
