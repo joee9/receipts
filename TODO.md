@@ -1,0 +1,4 @@
+- add restrictions for people
+    - address case where two people have the same abv
+    - address case where the same abv appears more than once in a ss ("split string")
+- add qty option for item: i.e. if an item appears more than once, it is added by incrementing a qty flag on the first inserted item
