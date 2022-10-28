@@ -14,12 +14,14 @@ class item:
     price: float
     split: int
     price_per: float
+    ss: str
 
     def __str__(self) -> str:
         fmt = '>6s'
         pr = f'{self.price:.2f}'
         pp = f'{round(self.price_per,2):.2f}'
-        return f'({self.split}) ${str(pr):{fmt}}, ${str(pp):{fmt}}:  {self.name}'
+        ss = ''.join(sorted(self.ss))
+        return f'{ss:<3s}  ${str(pr):{fmt}}, ${str(pp):{fmt}}:  {self.name}'
     
     def __repr__(self) -> str:
         return self.__str__(self)
@@ -71,7 +73,8 @@ def process_row(row,people,all_items):
         name=str(name),
         price=float(price),
         split=split,
-        price_per=float(price)/split
+        price_per=float(price)/split,
+        ss=ss
     )
 
     all_items.append(i)
@@ -96,7 +99,8 @@ def write_all_to_file(filename,ps,all_items):
 def pretty_print_person(p,fn,total_bill=False):
     with open(f'./{fn}-{p.abv}.txt','w') as f:
         f.write(f'${p.get_total(total_bill=total_bill)}: {p.name}\n\n')
-        f.write(f'SPL   TOTAL    SPLIT   NAME\n')
+        f.write(f'SPL    TOTAL    SPLIT   NAME\n')
+        f.write(f'----------------------------\n')
         for i in p.items:
             f.write(f'{str(i)}\n')
 
