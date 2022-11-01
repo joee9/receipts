@@ -17,7 +17,7 @@ class item:
     ss: str
 
     def __str__(self) -> str:
-        fmt = '>6s'
+        fmt = '>7s'
         pr = f'{self.price:.2f}'
         pp = f'{round(self.price_per,2):.2f}'
         ss = ''.join(sorted(self.ss))
@@ -103,11 +103,11 @@ def pretty_print_person(p,fn,total_bill=False):
         date, name = fn.split('-')
         date = f'{date[4:6]}/{date[6:8]}/{date[0:4]}'
         f.write(f'{date}, {name.title()}: {p.name}\n\n')
-        f.write(f'  SPLIT    TOTAL      PER   NAME\n')
+        f.write(f'  SPLIT     TOTAL       PER   NAME\n')
         f.write(f'--------------------------------\n')
         for i in p.items:
             f.write(f'{str(i)}\n')
-        f.write(f'\n           TOTAL: ${str(p.get_total(total_bill=total_bill)):>6s}')
+        f.write(f'\n            TOTAL: ${str(p.get_total(total_bill=total_bill)):>6s}')
 
 def process(filename):
 
